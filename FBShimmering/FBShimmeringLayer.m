@@ -145,6 +145,7 @@ static CAAnimation *shimmer_slide_finish(CAAnimation *a)
 #pragma mark - Lifecycle
 
 @synthesize shimmering = _shimmering;
+@synthesize shimmeringInverted = _shimmeringInverted;
 @synthesize shimmeringPauseDuration = _shimmeringPauseDuration;
 @synthesize shimmeringOpacity = _shimmeringOpacity;
 @synthesize shimmeringSpeed = _shimmeringSpeed;
@@ -184,6 +185,15 @@ static CAAnimation *shimmer_slide_finish(CAAnimation *a)
 
   // update shimmering animation
   [self _updateShimmering];
+}
+
+- (void)setShimmeringInverted:(BOOL)shimmeringInverted
+{
+    if (shimmeringInverted != _shimmeringInverted) {
+        _shimmeringInverted = shimmeringInverted;
+        _maskLayer = nil;
+        [self _updateShimmering];
+    }
 }
 
 - (void)setShimmering:(BOOL)shimmering
@@ -294,8 +304,12 @@ static CAAnimation *shimmer_slide_finish(CAAnimation *a)
   UIColor *maskedColor = [UIColor colorWithWhite:1.0 alpha:_shimmeringOpacity];
   UIColor *unmaskedColor = [UIColor whiteColor];
 
-  // Create a gradient from masked to unmasked to masked.
-  _maskLayer.colors = @[(__bridge id)maskedColor.CGColor, (__bridge id)unmaskedColor.CGColor, (__bridge id)maskedColor.CGColor];
+  // Create a gradient from masked to unmasked to masked, or masked to unmasked if inverted
+    if (_shimmeringInverted) {
+        _maskLayer.colors = @[(__bridge id)unmaskedColor.CGColor, (__bridge id)maskedColor.CGColor, (__bridge id)unmaskedColor.CGColor];
+    } else {
+        _maskLayer.colors = @[(__bridge id)maskedColor.CGColor, (__bridge id)unmaskedColor.CGColor, (__bridge id)maskedColor.CGColor];
+    }
 }
 
 - (void)_updateMaskLayout

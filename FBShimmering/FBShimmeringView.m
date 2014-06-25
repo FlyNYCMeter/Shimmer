@@ -38,6 +38,7 @@
   LAYER_ACCESSOR (accessor, ctype) \
   LAYER_MUTATOR (mutator, ctype)
 
+LAYER_RW_PROPERTY(isShimmeringInverted, setShimmeringInverted:, BOOL)
 LAYER_RW_PROPERTY(isShimmering, setShimmering:, BOOL)
 LAYER_RW_PROPERTY(shimmeringPauseDuration, setShimmeringPauseDuration:, CFTimeInterval)
 LAYER_RW_PROPERTY(shimmeringOpacity, setShimmeringOpacity:, CGFloat)

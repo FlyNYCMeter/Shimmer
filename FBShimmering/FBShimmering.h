@@ -18,6 +18,9 @@ typedef NS_ENUM(NSInteger, FBShimmerDirection) {
 
 @protocol FBShimmering <NSObject>
 
+//! @abstract Inverts shimmer. Defaults to NO.
+@property (nonatomic, assign, readwrite, getter = isShimmeringInverted) BOOL shimmeringInverted;
+
 //! @abstract Set this to YES to start shimming and NO to stop. Defaults to NO.
 @property (nonatomic, assign, readwrite, getter = isShimmering) BOOL shimmering;
 
